@@ -7,3 +7,5 @@
 
 This will be a simple `Scala` fp way of implementation using simple `Either` and `Option` :)
 
+## Scala-Zio-Asynchronous-Version
+This will be `Scala` fp way of implementation using `scalaz.ZIO` effect system with `Fiber` asynchronous features :)
