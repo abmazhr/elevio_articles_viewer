@@ -25,7 +25,8 @@ final case class GetArticleWithIdClient(
             .readTimeout(30.second)
             .get(uri"${config.apiEndpoint}/articles/$id")
         )
-        response    <- UIO.effectTotal(httpRequest.send())
+        fiber       <- UIO.effectTotal(httpRequest.send()).fork
+        response    <- fiber.join
         doc         <- UIO.effectTotal(parse(response.unsafeBody).getOrElse(Json.Null))
         cursor      <- UIO.effectTotal(doc.hcursor)
         articleJson <- UIO.effectTotal(cursor.downField("article"))
