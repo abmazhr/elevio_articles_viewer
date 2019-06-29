@@ -9,6 +9,8 @@ import io.circe._
 import io.circe.generic.auto._
 import io.circe.parser._
 
+import scala.concurrent.duration._
+
 final case class GetArticleWithKeywordClient(
     keyword: String,
     currentResult: ArticleSearchResult = Right(List.empty)
@@ -17,6 +19,7 @@ final case class GetArticleWithKeywordClient(
     val httpRequest: Request[String, Nothing] =
       sttp
         .headers(config.httpClientHeaders)
+        .readTimeout(30.second)
         .get(uri"${config.apiEndpoint}/search/en?query=$keyword")
 
     override def process: ArticleSearchResult = {

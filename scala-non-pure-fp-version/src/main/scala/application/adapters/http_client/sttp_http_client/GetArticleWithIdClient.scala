@@ -9,6 +9,8 @@ import io.circe._
 import io.circe.generic.auto._
 import io.circe.parser._
 
+import scala.concurrent.duration._
+
 final case class GetArticleWithIdClient(
     id: Int,
     currentResult: ArticleObject = Left(HttpFetchingArticleError())
@@ -17,6 +19,7 @@ final case class GetArticleWithIdClient(
     val httpRequest: Request[String, Nothing] =
       sttp
         .headers(config.httpClientHeaders)
+        .readTimeout(30.second)
         .get(uri"${config.apiEndpoint}/articles/$id")
 
     override def process: ArticleObject = {
