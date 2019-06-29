@@ -1,4 +1,4 @@
-name := "scala-non-pure-fp-version"
+name := "scala-normal-synchronous-version"
 
 version := "0.1"
 
