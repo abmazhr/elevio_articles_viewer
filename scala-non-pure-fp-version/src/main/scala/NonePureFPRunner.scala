@@ -1,8 +1,4 @@
-import application.adapters.http_client.sttp_http_client.{
-  GetAllArticlesClient,
-  GetArticleWithIdClient,
-  GetArticleWithKeywordClient
-}
+import application.ui.CLIApp
 import com.softwaremill.sttp.{HttpURLConnectionBackend, Id, SttpBackend}
 import domain.entity.Config
 
@@ -16,7 +12,5 @@ object NonePureFPRunner extends App {
   )
   implicit val httpBackend: SttpBackend[Id, Nothing] = HttpURLConnectionBackend()
 
-  println(GetAllArticlesClient().process.currentResult.toString)
-  println(GetArticleWithIdClient(4).process.currentResult.toString)
-  println(GetArticleWithKeywordClient("Scala").process.currentResult.toString)
+  CLIApp().mainView
 }
