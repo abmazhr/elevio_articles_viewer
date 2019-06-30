@@ -83,7 +83,19 @@ final case class CLIApp(
           mainView
 
         case Right(articleRefs) =>
-          this.getAllArticlesView(articleRefs)
+          if (articleRefs.isEmpty) {
+            val viewMenuHeaderLines = List(
+              "#####################################################################################",
+              "#                   SORRY THERE ARE NO ARTICLES IN YOUR ACCOUNT                     #",
+              "#####################################################################################"
+            )
+
+            println(MenuUtils.getMenuWireFrame(viewMenuHeaderLines, trimLastEndLine = true))
+            print("⇝ Press any key to go back")
+            std.readLine()
+            MenuUtils.clearScreen()
+            mainView
+          } else this.getAllArticlesView(articleRefs)
       }
     } else {
       val viewMenuHeaderLines = List(
